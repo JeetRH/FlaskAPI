@@ -1,0 +1,28 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: flask-hello-world
+    app.kubernetes.io/component: flask-hello-world
+    app.kubernetes.io/instance: flask-hello-world
+    app.kubernetes.io/name: flask-hello-world
+    app.kubernetes.io/part-of: jupyterhub
+  name: flask-hello-world
+spec:
+  failedBuildsHistoryLimit: 5
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: flask-hello-world:latest
+  runPolicy: Serial
+  source:
+    contextDir: /
+    git:
+      uri: https://github.com/JeetRH/FlaskAPI.git
+    type: Git
+  strategy:
+    dockerStrategy:
+      dockerfilePath: Dockerfile
+    type: Docker
+  successfulBuildsHistoryLimit: 5

@@ -1,0 +1,9 @@
+oc get deployment flask-hello-world -o yaml -n honda | oc neat > flask-hello-world-deployment.yaml
+
+oc get service flask-hello-world -o yaml -n honda | oc neat > flask-hello-world-service.yaml
+
+oc get route flask-hello-world -o yaml -n honda | oc neat > flask-hello-world-route.yaml
+
+oc get is flask-hello-world -o yaml -n honda | oc neat > flask-hello-world-imagestream.yaml
+
+oc get bc flask-hello-world -o yaml -n honda | oc neat > flask-hello-world-buildconfig.yaml

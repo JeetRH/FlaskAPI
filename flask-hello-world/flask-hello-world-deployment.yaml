@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: '*'
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: https://github.com/JeetRH/FlaskAPI.git
+  labels:
+    app: flask-hello-world
+    app.kubernetes.io/component: flask-hello-world
+    app.kubernetes.io/instance: flask-hello-world
+    app.kubernetes.io/name: flask-hello-world
+    app.kubernetes.io/part-of: hello-world
+    app.openshift.io/runtime: python
+  name: flask-hello-world
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: flask-hello-world
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: flask-hello-world
+        deploymentconfig: flask-hello-world
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/honda/flask-hello-world:1.0
+        imagePullPolicy: Always
+        name: flask-hello-world
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      terminationGracePeriodSeconds: 30
